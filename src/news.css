@@ -1,0 +1,64 @@
+.News {
+    text-align: center;
+  }
+  
+.News-header {
+  background-color: #8B1438;
+  padding: 10px; /* Reduced padding */
+  color: white;
+  font-size: 8px; /* Reduced font size */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  border-top: 0.5px solid white;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.article {
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 20px; /* Add padding */
+  margin: 0 25px; /* Add left and right margin */
+}
+
+.article-content {
+  overflow: hidden;
+}
+
+.article-content p {
+  text-align: justify;
+}
+
+.article-image {
+  width: 40%; /* Set the width of the image */
+  height: auto;
+  float: left;
+  margin-right: 10px;
+}
+
+.image-container {
+  position: relative; /* Set container position to relative */
+}
+
+.image-caption {
+  position: absolute; /* Set caption position to absolute */
+  background-color: rgba(0, 0, 0, 0.5); /* Add background color to caption */
+  color: white; /* Set text color to white */
+  padding: 5px; /* Add padding to caption */
+  font-size: 8px; /* Adjust font size */
+  font-style: italic; /* Set font style to italic */
+}
+
+footer {
+  background-color: #8B1438;
+  color: white;
+  padding: 5px; /* Reduced padding */
+  font-size: 10px; /* Reduced font size */
+  position: relative; /* Set position to relative */
+  margin-top: 10px; /* Add margin to push it down */
+  clear: both; /* Clear float to avoid overlap with floated elements */
+}

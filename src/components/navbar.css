@@ -1,0 +1,56 @@
+/* styles.css */
+
+.navbar {
+    background-color: #8B1438;
+    padding: 10px 0;
+  }
+  
+  .navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center; /* Align the logo and brand name vertically */
+  }
+  
+  .navbar-logo img {
+    width: 40px; /* Adjust the width of the logo */
+    margin-right: 10px;
+  }
+  
+  .navbar-logo span {
+    color: #fff;
+    font-size: 1.2rem;
+  }
+  
+  .nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; /* Align the list items vertically */
+  }
+  
+  .nav-item {
+    margin-right: 20px;
+  }
+  
+  .nav-item:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-item a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+  
+  .nav-item a:hover {
+    background-color: #974b62;
+  }
+  
