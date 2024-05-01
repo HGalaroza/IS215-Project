@@ -198,7 +198,7 @@
   .upload-progress-bar {
     width: 20px; /* Adjust width as needed */
     height: 20px; /* Adjust height as needed */
-    border: 2px solid #007bff; /* Blue border for spinner */
+    border: 2px solid #8B1438; /* Blue border for spinner */
     border-radius: 50%; /* Make it circular */
     border-top: 2px solid transparent; /* Hide the top border initially */
     animation: spin 1s linear infinite; /* Animation with 1 second duration, linear easing, and infinite repetition */

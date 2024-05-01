@@ -80,7 +80,7 @@
 .progress-bar {
   width: 100px; /* Adjust width as needed */
   height: 20px; /* Adjust height as needed */
-  background-color: #007bff; /* Blue color for progress bar */
+  background-color: #8B1438; /* Blue color for progress bar */
   animation: progress 1s linear infinite alternate; /* Animation with 1 second duration, linear easing, and alternate direction */
 }
 
