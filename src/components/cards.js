@@ -3,7 +3,7 @@ import '../components/cards.css';
 import { useNavigate } from 'react-router-dom';
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(proceess.env.REACT_APP_GEMINI_KEY);
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
 
 const Card = ({ title, imageSrc, description }) => {
     const navigate = useNavigate();
