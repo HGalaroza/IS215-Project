@@ -22,6 +22,12 @@ function Upload() {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setModalMessage('Invalid Image Size: File size exceeds 5MB limit.');
+        setShowModal(true);
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = function () {
         const result = reader.result;

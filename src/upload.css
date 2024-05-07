@@ -17,6 +17,9 @@
 .container{
     height: 350px;
     width: 430px;
+  }
+
+  .image{
     position: relative;
   }
 
@@ -165,7 +168,7 @@
   
   /*Modal Table*/
   
-  .modal-table {
+.modal-table {
     width: 70%;
     margin: 0 auto;
     border-collapse: collapse;
@@ -182,6 +185,28 @@
     background-color: #f2f2f2;
   }
 
+  .modal-body {
+    padding-top: 12px; /* Adjust the padding value as needed */
+  }
+
+  .modal-footer {
+    padding-bottom: 15px; /* Adjust the padding value as needed */
+  }
+
+  .modal-footer button {
+    padding: 12px 20px;
+    margin-top: 10px; /* Added margin at the top of the button */
+    background-color: #8B1438;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .modal-footer button:hover {
+    background-color: #80505e; /* Darker shade on hover */
+  }
+  
   .upload-progress {
     position: absolute;
     top: 50%; /* Center vertically */
