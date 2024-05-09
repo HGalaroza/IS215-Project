@@ -3,6 +3,8 @@ import './upload.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from './components/modal'; // Import the Modal component
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Upload() {
   const [loading, setLoading] = useState(false);
@@ -13,6 +15,8 @@ function Upload() {
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [facialResult, setfacialResult] = useState('');
+  const navigate = useNavigate();
 
   const handleSelectBtnClick = () => {
     const defaultBtn = document.querySelector("#default-btn");
@@ -53,7 +57,7 @@ function Upload() {
   const handleUploadFile = async (event) => {
     event.preventDefault();
     if (!file) {
-      setModalMessage('Please select a file first.');
+      setModalMessage('Please select a file first.:');
       setIsSuccess(false);
       setShowModal(true);
       return;
@@ -81,7 +85,7 @@ function Upload() {
           // Extract facial analysis data for each face
           const facialAnalysisResults = result.facialAttributes.map((face, index) => {
             const firstEmotionType = face.Emotions[0].Type;
-            return `
+            return `:
               Face ${index + 1}:
               Looks like a face: ${(face.Confidence).toFixed(1)}%
               Appears to be ${face.Gender.Value.toLowerCase()}: ${(face.Gender.Confidence).toFixed(1)}%
@@ -93,31 +97,83 @@ function Upload() {
               Eyes are open: ${face.EyesOpen.Value ? 'Yes' : 'No'} (${(face.EyesOpen.Confidence).toFixed(1)}%)
               Mouth is open: ${face.MouthOpen.Value ? 'Yes' : 'No'} (${(face.MouthOpen.Confidence).toFixed(1)}%)
               Does not have a mustache: ${face.Mustache.Value ? 'No' : 'Yes'} (${(face.Mustache.Confidence).toFixed(1)}%)
-              Does not have a beard: ${face.Beard.Value ? 'No' : 'Yes'} (${(face.Beard.Confidence).toFixed(1)}%)
-            `;
+              Does not have a beard: ${face.Beard.Value ? 'No' : 'Yes'} (${(face.Beard.Confidence).toFixed(1)}%)`;
           });
   
           // Construct the success message with facial analysis data for each face
-          const successMessage = facialAnalysisResults.join('\n\n');
+          const successMessage = facialAnalysisResults.join('\n');
+          setfacialResult(successMessage);
           setModalMessage(successMessage);
+          
         } else {
-          setModalMessage('No faces detected in the uploaded image.');
+          setModalMessage('No faces detected in the uploaded image.:');
         }
         setIsSuccess(true);
 
       } else {
-      setModalMessage('Failed to upload image (Low quality image).\nPlease try again.');
+      setModalMessage('Failed to upload image (Low quality image).\nPlease try again:');
       setIsSuccess(false);
-    }
-    setShowModal(true);
+      }
+      setShowModal(true);
+    };
+    reader.readAsDataURL(file);
   };
-  reader.readAsDataURL(file);
-};
 
   const closeModal = () => {
     setFile(null);
     setIsSuccess(false);
     setShowModal(false);
+  };
+
+
+  // Function to handle the Generate News button click
+  const onGenerateNews = async () => {
+    try {
+
+      // Construct the prompt for generating the news article
+      const prompt = "You are a news reporter, generate a must-read news article about the community while integrating the facial characteristics of the persons" + facialResult;
+      console.log(prompt);
+      // Send the prompt to the GPT-3 model
+      const requestBody = {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: "You are a news reporter." },
+          { role: 'user', content: prompt }
+        ]
+      };
+  
+      const response = await axios.post(
+        '/api/v1/chat/completions',
+        requestBody,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: process.env.REACT_APP_OPENAI_KEY,
+          },
+        }
+      );
+  
+      console.log('Response:', response); // Log the entire response object
+      const responseContent = response.data.choices[0].message.content;
+      
+      // Create the JSON object representing the news article
+      const newsArticle = {
+        "headline": "", 
+        "content": responseContent,
+        "image": imageSrc // Assuming imageSrc is the image source
+      };
+      
+      // Extract the headline from the beginning of the content
+      const headline = responseContent.split("\n")[0];
+      newsArticle.headline = headline;
+      
+      // Redirect to the news page with the article data
+      navigate('/news', { state: { newsArticle } });
+
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error
+    }
   };
 
   return (
@@ -145,7 +201,7 @@ function Upload() {
                     </div>
                 )}
       </div>
-        {showModal && <Modal message={modalMessage} onClose={closeModal} isSuccess={isSuccess} />}
+        {showModal && <Modal message={modalMessage} onClose={closeModal} isSuccess={isSuccess} onGenerateNews={onGenerateNews} />}
         </header>
     </div>
     
