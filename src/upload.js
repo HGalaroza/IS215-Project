@@ -129,9 +129,9 @@ function Upload() {
   // Function to handle the Generate News button click
   const onGenerateNews = async () => {
     try {
-
+      setLoading(true); // Start loading
       // Construct the prompt for generating the news article
-      const prompt = "You are a news reporter, generate a must-read news article about the community while integrating the facial characteristics of the persons" + facialResult;
+      const prompt = "Generate a must-read news article about the community while integrating the facial characteristics of the persons" + facialResult;
       console.log(prompt);
       // Send the prompt to the GPT-3 model
       const requestBody = {
@@ -155,7 +155,8 @@ function Upload() {
   
       console.log('Response:', response); // Log the entire response object
       const responseContent = response.data.choices[0].message.content;
-      
+      setLoading(false); // Stop loading
+
       // Create the JSON object representing the news article
       const newsArticle = {
         "headline": "", 
@@ -201,7 +202,7 @@ function Upload() {
                     </div>
                 )}
       </div>
-        {showModal && <Modal message={modalMessage} onClose={closeModal} isSuccess={isSuccess} onGenerateNews={onGenerateNews} />}
+        {showModal && <Modal message={modalMessage} onClose={closeModal} isSuccess={isSuccess} loading={loading} onGenerateNews={onGenerateNews} />}
         </header>
     </div>
     

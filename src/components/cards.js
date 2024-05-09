@@ -12,7 +12,7 @@ const Card = ({ title, imageSrc, description }) => {
     const handleButtonClick = async () => {
         setLoading(true); // Start loading
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = "Generate an captivating news article about a community coming together to support a local charity event, showcasing acts of kindness, generosity, and the power of unity (use made-up names, towns, states, barangay), while integrating the results of facial analysis:" + description.props.description;
+        const prompt = "You are a news reporter, generate a must read news article about the community while integrating the facial characteristics of the persons:" + description.props.description;
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = await response.text();
