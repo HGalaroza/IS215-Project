@@ -1,7 +1,7 @@
 import React from 'react';
 import '../upload.css';
 
-function Modal({ message, onClose, isSuccess, onGenerateNews }) {
+function Modal({ message, onClose, isSuccess, loading, onGenerateNews }) {
 
   // Parse the message into rows for table rendering
   const rows = message.split('\n').map((row, index) => (
@@ -28,8 +28,13 @@ function Modal({ message, onClose, isSuccess, onGenerateNews }) {
         </div>
         <div className="modal-footer">
           {isSuccess && (
-            <button onClick={onGenerateNews}>Generate News</button>
+            <button onClick={onGenerateNews}>{loading ? 'Generating news...' : 'Generate News'}</button>
           )}
+            {loading && (
+                      <div className="upload-progress">
+                        <div className="upload-progress-bar"></div>
+                      </div>
+            )}
         </div>
       </div>
     </div>
