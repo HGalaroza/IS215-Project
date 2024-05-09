@@ -23,6 +23,7 @@
   overflow: hidden;
   padding: 20px; /* Add padding */
   margin: 0 25px; /* Add left and right margin */
+  margin-bottom: 50px;
 }
 
 .article-content {
@@ -54,11 +55,13 @@
 }
 
 footer {
+  position: fixed; /* Position the footer relative to the viewport */
+  bottom: 0; /* Align the footer to the bottom of the viewport */
+  width: 100%; /* Make the footer span the entire width of the viewport */
   background-color: #8B1438;
   color: white;
-  padding: 5px; /* Reduced padding */
-  font-size: 10px; /* Reduced font size */
-  position: relative; /* Set position to relative */
-  margin-top: 10px; /* Add margin to push it down */
-  clear: both; /* Clear float to avoid overlap with floated elements */
+  padding: 5px;
+  font-size: 10px;
+  clear: both;
 }
+
