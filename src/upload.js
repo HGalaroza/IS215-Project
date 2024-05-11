@@ -104,11 +104,11 @@ function Upload() {
           const successMessage = facialAnalysisResults.join('\n');
           setfacialResult(successMessage);
           setModalMessage(successMessage);
-          
+          setIsSuccess(true);
         } else {
           setModalMessage('No faces detected in the uploaded image.:');
+          setIsSuccess(false);
         }
-        setIsSuccess(true);
 
       } else {
       setModalMessage('Failed to upload image (Low quality image).\nPlease try again:');
