@@ -32,6 +32,14 @@ function Upload() {
         return;
       }
       
+      // Check if the selected file is an image (with extensions jpeg, jpg, png)
+      const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+      if (!validImageTypes.includes(file.type)) {
+        setModalMessage('Invalid Image Type:\nPlease select a JPEG, JPG, or PNG file.:');
+        setShowModal(true);
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = function () {
         const result = reader.result;
@@ -79,7 +87,7 @@ function Upload() {
       console.log(result);
       setLoading(false); // Stop loading
       
-      
+
       if (response.ok) {
         if (result.facialAttributes && result.facialAttributes.length > 0) {
           // Extract facial analysis data for each face
@@ -105,6 +113,7 @@ function Upload() {
           setfacialResult(successMessage);
           setModalMessage(successMessage);
           setIsSuccess(true);
+
         } else {
           setModalMessage('No faces detected in the uploaded image.:');
           setIsSuccess(false);
@@ -117,6 +126,7 @@ function Upload() {
       setShowModal(true);
     };
     reader.readAsDataURL(file);
+
   };
 
   const closeModal = () => {
