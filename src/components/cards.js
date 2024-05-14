@@ -12,7 +12,7 @@ const Card = ({ title, imageSrc, description }) => {
     const handleButtonClick = async () => {
         setLoading(true); // Start loading
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = "You are a news reporter, generate a must read news article about the community while integrating the facial characteristics of the persons:" + description.props.description;
+        const prompt = "You are a news journalist, write a well-formatted English news article (Pick one random topic: Achievement , Science, Environment, Education, Crime, Business, Economics, Pop Culture, Technology, Community ). Use the following details as description of the characters in the news. Do not use 'Face 1' 'Face 2' etc.  - create made up names. Do not use the percentages and do not provide author's name as well." + description.props.description;
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = await response.text();
