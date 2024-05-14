@@ -4,13 +4,28 @@ import '../upload.css';
 function Modal({ message, onClose, isSuccess, loading, onGenerateNews }) {
 
   // Parse the message into rows for table rendering
-  const rows = message.split('\n').map((row, index) => (
-    <tr key={index}>
-      {row.split(':').map((cell, index) => (
-        <td key={index}>{cell}</td>
-      ))}
-    </tr>
-  ));
+  const rows = message.split('\n').map((row, index) => {
+    // Check if the row contains an image URL
+    if (row.includes('data:image/jpeg;base64,')) {
+      // If it's an image URL, render it as an image
+      return (
+        <tr key={index}>
+          <td colSpan="2" className="modal-image-container">
+            <img src={row} alt="Cropped Face" className="modal-image" />
+          </td>
+        </tr>
+      );
+    } else {
+      // If it's not an image URL, render it as text
+      return (
+        <tr key={index}>
+          {row.split(':').map((cell, index) => (
+            <td key={index}>{cell}</td>
+          ))}
+        </tr>
+      );
+    }
+  });
 
   return (
     <div className={`modal ${isSuccess ? 'success' : 'failure'}`}>

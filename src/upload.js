@@ -92,9 +92,26 @@ function Upload() {
         if (result.facialAttributes && result.facialAttributes.length > 0) {
           // Extract facial analysis data for each face
           const facialAnalysisResults = result.facialAttributes.map((face, index) => {
+
+            // Calculate coordinates and dimensions of the bounding box
+            const { Left, Top, Width, Height } = face.BoundingBox;
+            const image = new Image();
+            image.src = imageSrc;
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            // Set canvas dimensions to match cropped image dimensions
+            canvas.width = image.width * Width;
+            canvas.height = image.height * Height;
+            // Crop the image
+            ctx.drawImage(image, image.width * Left, image.height * Top, image.width * Width, image.height * Height, 0, 0, canvas.width, canvas.height);
+            const croppedImage = canvas.toDataURL('image/jpeg'); // Convert cropped image to data URL
+
+            //Highest confidence of emotion
             const firstEmotionType = face.Emotions[0].Type;
+
             return `:
               Face ${index + 1}:
+              ${croppedImage}
               Looks like a face: ${(face.Confidence).toFixed(1)}%
               Appears to be ${face.Gender.Value.toLowerCase()}: ${(face.Gender.Confidence).toFixed(1)}%
               Age range: ${face.AgeRange.Low} - ${face.AgeRange.High} years old
@@ -110,8 +127,10 @@ function Upload() {
   
           // Construct the success message with facial analysis data for each face
           const successMessage = facialAnalysisResults.join('\n');
-          setfacialResult(successMessage);
           setModalMessage(successMessage);
+
+          const facialResult = successMessage.replace(/data:image\/jpeg;base64,[^\n]*\n?/g, '');
+          setfacialResult(facialResult);
           setIsSuccess(true);
 
         } else {
@@ -141,13 +160,13 @@ function Upload() {
     try {
       setLoading(true); // Start loading
       // Construct the prompt for generating the news article
-      const prompt = "Generate a must-read news article about the community while integrating the facial characteristics of the persons" + facialResult;
+      const prompt = "Write a well-formatted English news article (Pick one random topic: Achievement , Science, Environment, Education, Crime, Business, Economics, Pop Culture, Technology, Community ). Use the following details as description of the characters in the news. Do not use 'Face 1' 'Face 2' etc.  - create made up names. Do not use the percentages and do not provide author's name as well." + facialResult;
       console.log(prompt);
       // Send the prompt to the GPT-3 model
       const requestBody = {
         model: 'gpt-3.5-turbo',
         messages: [
-          { role: 'system', content: "You are a news reporter." },
+          { role: 'system', content: "You are a news journalist." },
           { role: 'user', content: prompt }
         ]
       };
