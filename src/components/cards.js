@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
 
-const Card = ({ title, imageSrc, description }) => {
+const Card = ({ title, imageSrc, description, className }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const Card = ({ title, imageSrc, description }) => {
     };
 
     return (
-        <div className="card">
+        <div className={`card ${className}`}>
             <img src={imageSrc} alt={title} />
             <div className="card-body">
                 <h3>{title}</h3>

@@ -45,13 +45,26 @@ function Upload() {
         const result = reader.result;
         setImageSrc(result);
         setWrapperActive(true);
+
+        const img = new Image();
+        img.src = result;
+        img.onload = function() {
+          const imageElement = document.querySelector('.wrapper img');
+          if (img.naturalWidth > img.naturalHeight) {
+            imageElement.classList.add('landscape');
+            imageElement.classList.remove('portrait');
+          } else {
+            imageElement.classList.add('portrait');
+            imageElement.classList.remove('landscape');
+          }
+        };
       };
       reader.readAsDataURL(file);
-      setFile(file)
+      setFile(file);
     }
     
     if (event.target.value) {
-      let valueStore = event.target.value.match(/[0-9a-zA-Z^&'@{}[\],$=!-#().%+~_ ]+$/);
+      let valueStore = event.target.value.match(/[^\\]*$/)[0];
       setFileName(valueStore);
     }
   };

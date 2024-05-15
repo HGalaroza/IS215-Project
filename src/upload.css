@@ -5,7 +5,7 @@
 
 .upload-header {
   background-color: white;
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +52,14 @@
   .wrapper img{
     height: 100%;
     width: 100%;
+  }
+
+  .wrapper img.landscape {
     object-fit: cover;
+  }
+  
+  .wrapper img.portrait {
+    object-fit: contain;
   }
 
   .wrapper .icon{
@@ -88,6 +95,7 @@
     color: #fff;
     background: linear-gradient(135deg,#d16988 0%,#8B1438 100%);
   }
+
   .container #custom-btn{
     margin-top: 30px;
     display: block;
@@ -141,6 +149,7 @@
     font-size: 15px; /* Adjust font size */
     line-height: 1.5;
     color:#000000;
+    padding-top: 10px; /* Adjust the padding value as needed */
   }
   
   .close {
@@ -183,10 +192,6 @@
   
   .modal-table th {
     background-color: #f2f2f2;
-  }
-
-  .modal-body {
-    padding-top: 10px; /* Adjust the padding value as needed */
   }
 
   .modal-footer {
@@ -242,8 +247,73 @@
     border-top: 2px solid transparent; /* Hide the top border initially */
     animation: spin 1s linear infinite; /* Animation with 1 second duration, linear easing, and infinite repetition */
   }
+
+  .generate-progress {
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the progress bar */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .generate-progress-bar {
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    border: 2px solid #8B1438; /* Blue border for spinner */
+    border-radius: 50%; /* Make it circular */
+    border-top: 2px solid transparent; /* Hide the top border initially */
+    animation: spin 1s linear infinite; /* Animation with 1 second duration, linear easing, and infinite repetition */
+  }
   
   @keyframes spin {
     0% { transform: rotate(0deg); } /* Start with no rotation */
     100% { transform: rotate(360deg); } /* End with full rotation */
+  }
+
+  /* Media query for smaller devices */
+  @media screen and (max-width: 576px) {
+    .upload-header {
+      min-height: 85vh;
+    }
+
+    .container {
+      height: auto; /* Adjust height dynamically */
+      width: 100%; /* Adjust width to fit the screen */
+      max-width: 300px; /* Limit maximum width */
+    }
+
+    .wrapper {
+      height: auto; /* Adjust height dynamically */
+      max-width: 100%; /* Adjust width to fit the screen */
+    }
+
+    .wrapper .text {
+      font-size: 16px; /* Decrease font size for smaller screens */
+    }
+
+    .container #custom-btn {
+      margin-top: 20px; /* Reduce margin top for buttons */
+      font-size: 16px; /* Decrease font size for buttons */
+    }
+
+    .modal-content {
+      width: 80%;
+    }
+
+    .modal-header h5 {
+      font-size: 15px;
+    }
+
+    .modal-body {
+      font-size: 10px;
+    }
+
+    .modal-table {
+      width: 90%;
+    }
   }
