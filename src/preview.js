@@ -23,9 +23,9 @@ function Preview() {
 
         // Process the facial analysis results and map them to the images
         const imagesWithAttributes = data.images.map((image, index) => ({
-          url: image.imageUrl, // Assuming image names are in the format image1.jpg, image2.jpg, etc.
-          description: image.facialAttributes ? formatFacialAttributes(image.facialAttributes) : 'No facial attributes detected'
-        }));
+          url: image.imageUrl,
+          description: image.facialAttributes && image.facialAttributes.length > 0 ? formatFacialAttributes(image.facialAttributes) : 'No facial attributes detected'
+      }));
 
         setImagesWithFacialAttributes(imagesWithAttributes);
       } catch (error) {
