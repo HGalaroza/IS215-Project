@@ -35,7 +35,7 @@
 }
 
 .article-image {
-  width: 40%; /* Set the width of the image */
+  width: 35%; /* Set the width of the image */
   height: auto;
   float: left;
   margin-right: 10px;
@@ -65,3 +65,19 @@ footer {
   clear: both;
 }
 
+/* Media query for smaller devices */
+@media screen and (max-width: 576px) {
+  .News-header h1 {
+    font-size: 12px; /* Decrease font size for h1 on smaller screens */
+  }
+  
+  .article-content h2 {
+    font-size: 18px; /* Decrease font size for h2 on smaller screens */
+  }
+  
+  .article-image {
+    width: 100%; /* Set the width of the image */
+    height: auto;
+    padding-bottom: 12px;
+  }
+}

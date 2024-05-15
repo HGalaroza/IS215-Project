@@ -55,3 +55,23 @@
     background-color: #974b62;
   }
   
+  /* Media query for smaller devices */
+  @media screen and (max-width: 576px) {
+    .navbar-logo img {
+      width: 25px; /* Further decrease the width of the logo */
+      margin-right: 6px; /* Reduce the margin for the logo */
+    }
+    
+    .navbar-logo span {
+      font-size: 0.7rem; /* Further decrease the font size of the text */
+    }
+    
+    .nav-item {
+      font-size: 0.7rem;
+      margin-right: 8px; /* Further reduce the margin between nav items */
+    }
+    
+    .nav-item a {
+      padding: 6px 10px; /* Further decrease the padding of the links */
+    }
+  }
