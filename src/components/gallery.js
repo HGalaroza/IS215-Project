@@ -24,7 +24,7 @@ const Gallery = ({ images }) => {
       {images.map((image, index) => (
         <Card
           key={index}
-          title={image.url.substring(image.url.lastIndexOf('/') + 1)} // Use the image file name as the title
+          title={truncateFilename(image.url.substring(image.url.lastIndexOf('/') + 1), 25)} // Truncate filename to 20 characters
           imageSrc={image.url} // Use the image URL from the images array
           description={<DescriptionToggle description={image.description} />} // Use the facial attributes description with toggle button
           className={imageOrientations[index]}
@@ -69,5 +69,17 @@ const formatDescription = (description) => {
     ));
   }
 };
+
+const truncateFilename = (filename, maxLength) => {
+  if (filename.length <= maxLength) {
+    return filename;
+  } else {
+    const extensionIndex = filename.lastIndexOf('.');
+    const extension = filename.substring(extensionIndex);
+    const basename = filename.substring(0, extensionIndex);
+    const truncatedBasename = basename.substring(0, maxLength - extension.length - 3); // 3 for "..."
+    return truncatedBasename + '...' + extension;
+  }
+}
 
 export default Gallery;
