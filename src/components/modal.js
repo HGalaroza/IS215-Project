@@ -43,11 +43,11 @@ function Modal({ message, onClose, isSuccess, loading, onGenerateNews }) {
         </div>
         <div className="modal-footer">
           {isSuccess && (
-            <button onClick={onGenerateNews}>{loading ? 'Generating news...' : 'Generate News'}</button>
+            <button onClick={onGenerateNews}>{loading ? 'Generating news...' : 'View News'}</button>
           )}
             {loading && (
-                      <div className="upload-progress">
-                        <div className="upload-progress-bar"></div>
+                      <div className="generate-progress">
+                        <div className="generate-progress-bar"></div>
                       </div>
             )}
         </div>
