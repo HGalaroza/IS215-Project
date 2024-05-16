@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from './components/modal'; // Import the Modal component
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
 
 function Upload() {
   const [loading, setLoading] = useState(false);
@@ -171,52 +174,31 @@ function Upload() {
   // Function to handle the Generate News button click
   const onGenerateNews = async () => {
     try {
-      setLoading(true); // Start loading
-      // Construct the prompt for generating the news article
-      const prompt = "Write a well-formatted English news article (Pick one random topic: Achievement , Science, Environment, Education, Crime, Business, Economics, Pop Culture, Technology, Community ). Use the following details as description of the characters in the news. Do not use 'Face 1' 'Face 2' etc.  - create made up names. Do not use the percentages and do not provide author's name as well." + facialResult;
-      console.log(prompt);
-      // Send the prompt to the GPT-3 model
-      const requestBody = {
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: "You are a news journalist." },
-          { role: 'user', content: prompt }
-        ]
-      };
-  
-      const response = await axios.post(
-        '/api/v1/chat/completions',
-        requestBody,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: process.env.REACT_APP_OPENAI_KEY,
-          },
+            setLoading(true); // Start loading
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const prompt = "Write a well-formatted English news article (Pick one random topic: Achievement , Science, Environment, Education, Crime, Business, Economics, Pop Culture, Technology, Community ). Use the following details as description of the characters in the news. Do not use 'Face 1' 'Face 2' etc.  - create made up names. Do not use the percentages and do not provide author's name as well." + facialResult;
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = await response.text();
+    
+            // Create the JSON object with headline and content
+            const newsArticle = {
+                headline: "", 
+                content: text,
+                image: imageSrc 
+            };
+            
+            setLoading(false); // Stop loading
+            // Extract the headline from the beginning of the text
+            const headline = text.split("\n")[0];
+            newsArticle.headline = headline;
+    
+            navigate('/news', { state: { newsArticle } }); // Redirect to the news page
+            
+        } catch (error) {
+            console.error("Error generating content:", error);
+            alert("An error occurred while generating the news article.");
         }
-      );
-  
-      console.log('Response:', response); // Log the entire response object
-      const responseContent = response.data.choices[0].message.content;
-      setLoading(false); // Stop loading
-
-      // Create the JSON object representing the news article
-      const newsArticle = {
-        "headline": "", 
-        "content": responseContent,
-        "image": imageSrc // Assuming imageSrc is the image source
-      };
-      
-      // Extract the headline from the beginning of the content
-      const headline = responseContent.split("\n")[0];
-      newsArticle.headline = headline;
-      
-      // Redirect to the news page with the article data
-      navigate('/news', { state: { newsArticle } });
-
-    } catch (error) {
-      console.error('Error:', error);
-      // Handle error
-    }
   };
 
   return (
